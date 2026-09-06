@@ -1,0 +1,53 @@
+name: live-api-sweep
+
+on:
+  schedule:
+    # Every 3 days. Adjust the day-of-month step for a different cadence.
+    - cron: "0 6 */3 * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      CARGO_TERM_COLOR: always
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: setup rust
+        uses: oxc-project/setup-rust@3d6fb132fbe7cdcb66bf8ec193911c2945369d12 # v1.0.17
+        with:
+          components: clippy rustfmt
+          tools: just
+          cache-key: sweep
+          save-cache: ${{ github.ref_name == 'main' }}
+
+      - name: Run live-API conformance sweep
+        run: just sweep
+
+      # Near-future: notify on failure via Cloudflare Worker -> SMS.
+      # Add a step here with `if: failure()` that POSTs to the worker
+      # URL with a token from secrets, e.g.:
+      # - name: Notify on failure
+      #   if: failure()
+      #   run: >
+      #     curl -s -X POST "$WORKER_URL"
+      #       -H "Authorization: Bearer $SMS_TOKEN"
+      #       -H "Content-Type: application/json"
+      #       -d '{"text":"artifacthub-mcp sweep failed"}'
+      #   env:
+      #     WORKER_URL: ${{ secrets.SWEEP_WORKER_URL }}
+      #     SMS_TOKEN: ${{ secrets.SWEEP_SMS_TOKEN }}
