@@ -71,3 +71,24 @@ fn sample_package_json() -> serde_json::Value {
         "contains_security_updates": false
     })
 }
+
+#[tokio::test]
+async fn null_security_report_body_is_treated_as_missing() {
+    // Live API returns literal `null` for packages without a scan.
+    let mock_server = MockServer::start().await;
+
+    Mock::given(method("GET"))
+        .and(path("/packages/pkg-123/1.0.0/security-report"))
+        .respond_with(ResponseTemplate::new(200).set_body_string("null"))
+        .mount(&mock_server)
+        .await;
+
+    let client = ArtifactHubClient::with_base_url(mock_server.uri());
+    let report = client
+        .packages()
+        .security_report("pkg-123", "1.0.0")
+        .await
+        .unwrap();
+
+    assert!(report.is_none());
+}

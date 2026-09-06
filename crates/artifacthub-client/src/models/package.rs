@@ -29,7 +29,7 @@ pub struct ProductionUsageOrganization {
     pub home_url: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub logo_image_id: Option<String>,
-    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub used_in_production: bool,
 }
 
@@ -41,27 +41,37 @@ pub struct PackageViews(pub BTreeMap<String, BTreeMap<String, i64>>);
 #[derive(Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PackageSummary {
+    #[serde(default)]
     pub package_id: String,
+    #[serde(default)]
     pub name: String,
+    #[serde(default)]
     pub normalized_name: String,
+    #[serde(default)]
     pub version: String,
+    #[serde(default)]
     pub description: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub home_url: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub logo_image_id: Option<String>,
+    #[serde(default)]
     pub deprecated: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub prerelease: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub signed: bool,
     #[serde(default)]
     pub keywords: Vec<String>,
+    #[serde(default)]
     pub ts: i64,
+    #[serde(default)]
     pub repository: RepositoryInfo,
+    #[serde(default)]
     pub stats: PackageStats,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub data: Option<ArtifactHubValue>,
+    #[serde(default)]
     pub links: Vec<Link>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub containers_images: Option<Vec<ContainerImage>>,
@@ -69,7 +79,7 @@ pub struct PackageSummary {
     pub security_report_summary: Option<SecurityReportSummary>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub security_report_created_at: Option<i64>,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub contains_security_updates: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub digest: Option<String>,
@@ -77,20 +87,24 @@ pub struct PackageSummary {
     pub app_version: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RepositoryInfo {
+    #[serde(default)]
     pub name: String,
+    #[serde(default)]
     pub display_name: String,
+    #[serde(default)]
     pub url: String,
+    #[serde(default)]
     pub kind: i32,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organization_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organization_display_name: Option<String>,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub verified_publisher: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub official: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cncf: Option<bool>,
@@ -98,10 +112,12 @@ pub struct RepositoryInfo {
     pub scanner_disabled: Option<bool>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PackageStats {
+    #[serde(default)]
     pub subscriptions: i32,
+    #[serde(default)]
     pub webhooks: i32,
 }
 
@@ -118,7 +134,7 @@ pub struct ContainerImage {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
     pub image: String,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub whitelisted: bool,
 }
 
@@ -143,9 +159,9 @@ pub struct PackageVersion {
     pub version: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub app_version: Option<String>,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub contains_security_updates: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub prerelease: bool,
     pub ts: i64,
 }
