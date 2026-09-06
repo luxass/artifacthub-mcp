@@ -9,19 +9,23 @@ pub struct SearchRepositoriesResponse {
 #[derive(Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SearchRepositoryResult {
+    #[serde(default)]
     pub repository_id: String,
+    #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub display_name: Option<String>,
+    #[serde(default)]
     pub url: String,
+    #[serde(default)]
     pub kind: i32,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organization_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub organization_display_name: Option<String>,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub verified_publisher: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub official: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cncf: Option<bool>,
