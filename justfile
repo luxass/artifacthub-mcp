@@ -35,3 +35,17 @@ ci:
   just fmt-check
   just lint
   just test
+
+# ==================== LOCAL INSTALL ====================
+
+# Build debug binary and symlink into ~/.local/bin for opencode
+link:
+  cargo build --locked
+  mkdir -p ~/.local/bin
+  ln -sfn "{{justfile_directory()}}/target/debug/artifacthub-mcp" ~/.local/bin/artifacthub-mcp
+  @echo "linked ~/.local/bin/artifacthub-mcp"
+
+# Remove ~/.local/bin symlink
+unlink:
+  rm -f ~/.local/bin/artifacthub-mcp
+  @echo "unlinked ~/.local/bin/artifacthub-mcp"
