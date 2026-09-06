@@ -142,6 +142,49 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn test_search_repositories_false_bools_still_serialize() {
+        let mock_server = MockServer::start().await;
+
+        Mock::given(method("GET"))
+            .and(path("/repositories/search"))
+            .and(query_param("org", "kvalitetsit"))
+            .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!([
+                {
+                    "repository_id": "repo-456",
+                    "name": "kvalitetsit",
+                    "url": "https://example.com",
+                    "kind": 0,
+                    "verified_publisher": false,
+                    "official": false
+                }
+            ])))
+            .mount(&mock_server)
+            .await;
+
+        let server = test_server(&mock_server.uri());
+        let result = handle_search_repositories(
+            &server,
+            SearchRepositoriesParams {
+                name: None,
+                kind: None,
+                user: None,
+                org: Some("kvalitetsit".to_string()),
+                limit: None,
+                offset: None,
+            },
+        )
+        .await
+        .unwrap();
+
+        assert_eq!(result.0.repositories.len(), 1);
+        // Must serialize even when false, or rmcp output-schema validation (-32602) fails.
+        let value = serde_json::to_value(&result.0).unwrap();
+        let repo = &value["repositories"][0];
+        assert_eq!(repo["official"], serde_json::Value::Bool(false));
+        assert_eq!(repo["verified_publisher"], serde_json::Value::Bool(false));
+    }
+
+    #[tokio::test]
     async fn test_search_repositories_invalid_kind() {
         let server = test_server("http://localhost:12345");
         let result = handle_search_repositories(

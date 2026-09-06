@@ -9,11 +9,17 @@ pub struct SearchResponse {
 #[derive(Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SearchResult {
+    #[serde(default)]
     pub package_id: String,
+    #[serde(default)]
     pub name: String,
+    #[serde(default)]
     pub normalized_name: String,
+    #[serde(default)]
     pub version: String,
+    #[serde(default)]
     pub description: String,
+    #[serde(default)]
     pub repository: SearchRepositoryInfo,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub logo_image_id: Option<String>,
@@ -23,8 +29,9 @@ pub struct SearchResult {
     pub license: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub official: Option<bool>,
+    #[serde(default)]
     pub deprecated: bool,
-    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    #[serde(default)]
     pub signed: bool,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub signatures: Vec<String>,
@@ -34,18 +41,22 @@ pub struct SearchResult {
     pub production_organizations_count: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub security_report_summary: Option<crate::models::SecurityReportSummary>,
+    #[serde(default)]
     pub stars: i32,
+    #[serde(default)]
     pub ts: i64,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SearchRepositoryInfo {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub repository_id: Option<String>,
+    #[serde(default)]
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub display_name: Option<String>,
+    #[serde(default)]
     pub url: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub private: Option<bool>,
