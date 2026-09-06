@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.6](https://github.com/luxass/artifacthub-rs/compare/artifacthub-client@0.0.5...artifacthub-client@0.0.6) - 2026-09-06
+
+### 🐛 Bug Fixes
+
+- tolerate missing fields in Artifact Hub API responses ([#17](https://github.com/luxass/artifacthub-rs/pull/17)) (by @luxass)
+
+### Contributors
+
+* @luxass
+
 ## [0.0.5](https://github.com/luxass/artifacthub-rs/compare/artifacthub-client@0.0.4...artifacthub-client@0.0.5) - 2026-05-30
 
 ### 🐛 Bug Fixes
