@@ -113,7 +113,8 @@ impl ArtifactHubClient {
         T: DeserializeOwned,
     {
         let body = self.get(path, params).await?;
-        if body.trim().is_empty() {
+        let trimmed = body.trim();
+        if trimmed.is_empty() || trimmed == "null" {
             return Ok(None);
         }
 
