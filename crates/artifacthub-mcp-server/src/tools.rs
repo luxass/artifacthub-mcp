@@ -68,7 +68,10 @@ fn tool_disabled_error<T>(name: &str) -> Result<Json<T>, String> {
 
 #[tool_router(router = tool_router, vis = "pub")]
 impl ArtifactHubServer {
-    #[tool(description = "Get basic information about this MCP server")]
+    #[tool(
+        description = "Get basic information about this MCP server",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn get_server_info(
         &self,
         Parameters(p): Parameters<get_server_info::GetServerInfoParams>,
@@ -80,7 +83,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Search for packages in Artifact Hub. Results are ranked by popularity/stars."
+        description = "Search for packages in Artifact Hub. Results are ranked by popularity/stars.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn search_packages(
         &self,
@@ -93,7 +97,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get metadata summary for a package (name, version, description, repository, stats, keywords, links, containers, security). Does NOT include readme or available_versions."
+        description = "Get metadata summary for a package (name, version, description, repository, stats, keywords, links, containers, security). Does NOT include readme or available_versions.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package(
         &self,
@@ -106,7 +111,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get the README for a package (can be very large, 100KB+). Use sparingly - prefer get_package for metadata."
+        description = "Get the README for a package (can be very large, 100KB+). Use sparingly - prefer get_package for metadata.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_readme(
         &self,
@@ -118,7 +124,10 @@ impl ArtifactHubServer {
         get_package_readme::handle_get_package_readme(self, p).await
     }
 
-    #[tool(description = "List all available versions for a package")]
+    #[tool(
+        description = "List all available versions for a package",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn get_package_versions(
         &self,
         Parameters(p): Parameters<get_package_versions::GetPackageVersionsParams>,
@@ -129,7 +138,10 @@ impl ArtifactHubServer {
         get_package_versions::handle_get_package_versions(self, p).await
     }
 
-    #[tool(description = "Get changelog for a package between versions")]
+    #[tool(
+        description = "Get changelog for a package between versions",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn get_package_changelog(
         &self,
         Parameters(p): Parameters<get_package_changelog::GetChangelogParams>,
@@ -140,7 +152,10 @@ impl ArtifactHubServer {
         get_package_changelog::handle_get_package_changelog(self, p).await
     }
 
-    #[tool(description = "Get star count for a package")]
+    #[tool(
+        description = "Get star count for a package",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn get_package_star_stats(
         &self,
         Parameters(p): Parameters<get_package_star_stats::GetStarStatsParams>,
@@ -151,7 +166,10 @@ impl ArtifactHubServer {
         get_package_star_stats::handle_get_package_star_stats(self, p).await
     }
 
-    #[tool(description = "Get the default values.yaml for a Helm chart")]
+    #[tool(
+        description = "Get the default values.yaml for a Helm chart",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn get_package_values(
         &self,
         Parameters(p): Parameters<get_package_values::GetPackageValuesParams>,
@@ -162,7 +180,10 @@ impl ArtifactHubServer {
         get_package_values::handle_get_package_values(self, p).await
     }
 
-    #[tool(description = "Search for repositories by name, kind, user, or organization")]
+    #[tool(
+        description = "Search for repositories by name, kind, user, or organization",
+        annotations(read_only_hint = true, open_world_hint = true)
+    )]
     async fn search_repositories(
         &self,
         Parameters(p): Parameters<search_repositories::SearchRepositoriesParams>,
@@ -174,7 +195,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get changelog for a package as pre-formatted markdown (no JSON parsing needed)"
+        description = "Get changelog for a package as pre-formatted markdown (no JSON parsing needed)",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_changelog_md(
         &self,
@@ -187,7 +209,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get detailed security report with CVEs for a package. Requires package_id and version from get_package."
+        description = "Get detailed security report with CVEs for a package. Requires package_id and version from get_package.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_security_report(
         &self,
@@ -200,7 +223,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get JSON schema for a Helm chart's values.yaml. Requires package_id and version from get_package."
+        description = "Get JSON schema for a Helm chart's values.yaml. Requires package_id and version from get_package.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_values_schema(
         &self,
@@ -213,7 +237,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "List Helm chart template names and metadata without template source. Use get_package_template to fetch one decoded template. Requires package_id and version from get_package."
+        description = "List Helm chart template names and metadata without template source. Use get_package_template to fetch one decoded template. Requires package_id and version from get_package.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_templates(
         &self,
@@ -226,7 +251,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get one decoded Helm chart template by exact name. Use get_package_templates first to list template names. Requires package_id and version from get_package."
+        description = "Get one decoded Helm chart template by exact name. Use get_package_templates first to list template names. Requires package_id and version from get_package.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_template(
         &self,
@@ -239,7 +265,8 @@ impl ArtifactHubServer {
     }
 
     #[tool(
-        description = "Get only the decoded Helm chart template source text by exact name. Use get_package_templates first to list template names. Requires package_id and version from get_package."
+        description = "Get only the decoded Helm chart template source text by exact name. Use get_package_templates first to list template names. Requires package_id and version from get_package.",
+        annotations(read_only_hint = true, open_world_hint = true)
     )]
     async fn get_package_template_data(
         &self,
