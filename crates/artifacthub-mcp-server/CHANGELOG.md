@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.8](https://github.com/luxass/artifacthub-rs/compare/artifacthub-mcp@0.2.7...artifacthub-mcp@0.2.8) - 2026-09-06
+
+### 🐛 Bug Fixes
+
+- tolerate missing fields in Artifact Hub API responses ([#17](https://github.com/luxass/artifacthub-rs/pull/17)) (by @luxass)
+
+### 🚀 Features
+
+- mark MCP tools as read-only with open-world hint ([#18](https://github.com/luxass/artifacthub-rs/pull/18)) (by @luxass)
+
+### Contributors
+
+* @luxass
+
 ## [0.2.7](https://github.com/luxass/artifacthub-rs/compare/artifacthub-mcp@0.2.6...artifacthub-mcp@0.2.7) - 2026-05-30
 
 ### 🐛 Bug Fixes
